@@ -54,25 +54,30 @@ st.markdown(f"""
         font-weight: 600 !important;
     }}
     
-    /* Tabs */
+    /* Tabs - Modern Segmented Control */
     .stTabs [data-baseweb="tab-list"] {{
-        gap: 20px;
+        gap: 10px;
+        background-color: #E8E0DF;
+        padding: 5px;
+        border-radius: 12px;
+        border: none;
     }}
     .stTabs [data-baseweb="tab"] {{
-        height: 50px;
+        height: 45px;
         white-space: pre-wrap;
-        background-color: white;
-        border-radius: 10px 10px 0px 0px;
-        gap: 10px;
-        padding-top: 10px;
-        padding-bottom: 10px;
-        box-shadow: 0 -2px 5px rgba(0,0,0,0.02);
-        color: black !important;
+        background-color: transparent;
+        border-radius: 8px;
+        padding: 0px 20px;
+        color: #777777 !important;
+        transition: all 0.3s ease-in-out;
+        border: none !important;
     }}
     .stTabs [aria-selected="true"] {{
-        background-color: {COLOR_LIGHTEST};
-        color: {COLOR_DARK} !important;
-        border-bottom: 3px solid {COLOR_DARK};
+        background-color: white !important;
+        color: black !important;
+        font-weight: bold !important;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1) !important;
+        border: none !important;
     }}
     
     /* Plotly containers shadow */
@@ -81,6 +86,16 @@ st.markdown(f"""
         border-radius: 15px;
         padding: 10px;
         box-shadow: 0 4px 6px rgba(0,0,0,0.04);
+    }}
+    
+    /* Animations */
+    @keyframes fadeInUp {{
+        from {{ opacity: 0; transform: translateY(25px); }}
+        to {{ opacity: 1; transform: translateY(0); }}
+    }}
+    
+    div[data-testid="stMetric"], div.stPlotlyChart, div[data-testid="stMarkdownContainer"], div.stAlert {{
+        animation: fadeInUp 0.7s cubic-bezier(0.25, 1, 0.5, 1) both;
     }}
     </style>
     """, unsafe_allow_html=True)
@@ -97,6 +112,9 @@ def load_data():
         kpis = json.load(f)
         
     gdf = gpd.read_file(DATA_DIR / "mapa_pobreza.geojson")
+    # Recortar islas (Isla de Pascua, Juan Fernandez) para forzar un zoom mayor en el continente
+    gdf = gdf.clip([-76.0, -60.0, -50.0, -15.0])
+    
     scatter_df = pd.read_csv(DATA_DIR / "scatter.csv")
     df_indig = pd.read_csv(DATA_DIR / "indigena.csv")
     df_radar = pd.read_csv(DATA_DIR / "radar.csv")
