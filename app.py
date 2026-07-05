@@ -49,7 +49,7 @@ st.markdown(f"""
         transform: translateY(-5px);
         box-shadow: 0 8px 15px rgba(0,0,0,0.1);
     }}
-    [data-testid="stMetricValue"], [data-testid="stMetricLabel"] {{
+    [data-testid="stMetricValue"], [data-testid="stMetricLabel"], [data-testid="stMetricDelta"] * {{
         color: black !important;
         font-weight: 600 !important;
     }}
@@ -67,6 +67,7 @@ st.markdown(f"""
         padding-top: 10px;
         padding-bottom: 10px;
         box-shadow: 0 -2px 5px rgba(0,0,0,0.02);
+        color: black !important;
     }}
     .stTabs [aria-selected="true"] {{
         background-color: {COLOR_LIGHTEST};
@@ -133,10 +134,11 @@ with tab1:
             hover_name="Region",
             hover_data={"pobreza": True},
             color_continuous_scale=[BACKGROUND_COLOR, COLOR_LIGHTEST, COLOR_DARK],
+            labels={"pobreza": "Tasa de pobreza (%)"}
         )
         fig_map.update_geos(fitbounds="locations", visible=False)
-        fig_map.update_layout(margin={"r":0,"t":0,"l":0,"b":0}, paper_bgcolor='rgba(0,0,0,0)', font_color='black', height=600)
-        st.plotly_chart(fig_map, width='stretch')
+        fig_map.update_layout(margin={"r":0,"t":0,"l":0,"b":0}, paper_bgcolor='rgba(0,0,0,0)', font_color='black', height=850, dragmode=False)
+        st.plotly_chart(fig_map, width='stretch', config={'scrollZoom': False})
         st.info("💡 **Interpretación:** La Araucanía destaca nítidamente con la mayor incidencia de pobreza a nivel nacional, superando ampliamente al resto de las regiones.")
 
     with col2:
@@ -152,6 +154,8 @@ with tab1:
         fig_scatter.update_traces(textposition='top center', textfont_color='black', marker=dict(size=12, line=dict(width=1, color='White')))
         fig_scatter.update_layout(showlegend=False, paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', font_color='black',
                                   xaxis_title="Población Rural (%)", yaxis_title="Tasa de Pobreza (%)")
+        fig_scatter.update_xaxes(color="black", title_font=dict(color="black"), tickfont=dict(color="black"), gridcolor="rgba(0,0,0,0.1)")
+        fig_scatter.update_yaxes(color="black", title_font=dict(color="black"), tickfont=dict(color="black"), gridcolor="rgba(0,0,0,0.1)")
         st.plotly_chart(fig_scatter, width='stretch')
         st.info("💡 **Interpretación:** Existe una clara correlación positiva entre la ruralidad y la pobreza. La Araucanía se posiciona como un caso extremo en ambos factores.")
 
@@ -197,6 +201,8 @@ with tab2:
         fig_bar.update_traces(texttemplate='%{x:.1f}%', textposition='outside', textfont_color='black', cliponaxis=False)
         fig_bar.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', font_color='black',
                               xaxis_title="Porcentaje (%)", yaxis_title="")
+        fig_bar.update_xaxes(color="black", title_font=dict(color="black"), tickfont=dict(color="black"))
+        fig_bar.update_yaxes(color="black", title_font=dict(color="black"), tickfont=dict(color="black"))
         st.plotly_chart(fig_bar, width='stretch')
         st.info("💡 **Interpretación:** La Araucanía concentra una proporción significativamente mayor de población indígena que el resto de Chile, superando el 54% en zonas rurales.")
 
@@ -212,6 +218,8 @@ with tab3:
         fig_line.update_traces(hovertemplate="Rango de edad: %{x}<br>Ingreso: $%{y:,.0f} mil")
         fig_line.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', font_color='black',
                                yaxis_title="Ingreso per cápita (miles de $)")
+        fig_line.update_xaxes(color="black", title_font=dict(color="black"), tickfont=dict(color="black"))
+        fig_line.update_yaxes(color="black", title_font=dict(color="black"), tickfont=dict(color="black"))
         st.plotly_chart(fig_line, width='stretch')
         st.info("💡 **Interpretación:** A diferencia de la R. Metropolitana y el resto de Chile, los ingresos en La Araucanía se estancan rápidamente después de los 35 años.")
         st.caption("Nota: La curva 'Chile' excluye a La Araucanía y a la Región Metropolitana para permitir una comparación aislada frente a los extremos socioeconómicos del país.")
@@ -244,6 +252,8 @@ with tab3:
             barmode='stack', paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', font_color='black',
             xaxis_title="Porcentaje (%)", yaxis_title="", legend_title="Nivel"
         )
+        fig_stack.update_xaxes(color="black", title_font=dict(color="black"), tickfont=dict(color="black"))
+        fig_stack.update_yaxes(color="black", title_font=dict(color="black"), tickfont=dict(color="black"))
         st.plotly_chart(fig_stack, width='stretch')
         st.info("💡 **Interpretación:** Existe un grave rezago educativo histórico. La Araucanía es la región con el mayor porcentaje de población adulta con educación básica o menos.")
 
