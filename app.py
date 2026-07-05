@@ -119,7 +119,7 @@ with tab1:
     
     with col1:
         st.subheader("Tasa de pobreza por región")
-        st.caption("Fuente: Encuesta CASEN 2024")
+        st.caption("Fuente: Encuesta CASEN 2024 (N=218.367)")
         # Mapa
         fig_map = px.choropleth(
             gdf,
@@ -138,7 +138,7 @@ with tab1:
     with col2:
         r_val = scatter_df['Ruralidad'].corr(scatter_df['Pobreza'])
         st.subheader(f"Ruralidad vs Pobreza (r = {r_val:.2f})")
-        st.caption("Fuente: Encuesta CASEN 2024")
+        st.caption("Fuente: Encuesta CASEN 2024 (N=218.367)")
         
         fig_scatter = px.scatter(
             scatter_df, x="Ruralidad", y="Pobreza", color="Region", text="Region",
@@ -155,7 +155,7 @@ with tab2:
     col1, col2 = st.columns(2)
     with col1:
         st.subheader("Carencias Multidimensionales")
-        st.caption("Fuente: Encuesta CASEN 2024")
+        st.caption("Fuente: Encuesta CASEN 2024 (N=218.367)")
         # Radar
         radar_labels = df_radar['Indicador'].tolist()
         radar_araucania = df_radar['La Araucanía'].tolist()
@@ -187,7 +187,7 @@ with tab2:
 
     with col2:
         st.subheader("Proporción de Población Indígena")
-        st.caption("Fuente: Encuesta CASEN 2024")
+        st.caption("Fuente: Encuesta CASEN 2024 (N=218.367)")
         fig_bar = px.bar(df_indig, x="Valor", y="Zona", color="Area", barmode="group", orientation='h',
                          color_discrete_map={'La Araucanía': COLOR_DARK, 'Chile': GRAY_LIGHT})
         fig_bar.update_traces(texttemplate='%{x:.1f}%', textposition='outside', cliponaxis=False)
@@ -200,19 +200,21 @@ with tab3:
     col1, col2 = st.columns(2)
     with col1:
         st.subheader("Crecimiento de ingresos en el ciclo de vida")
-        st.caption("Fuente: Encuesta CASEN 2024")
-        fig_line = px.line(df_growth, x="Edad", y="Ingreso", color="Región", markers=True,
+        st.caption("Fuente: Encuesta CASEN 2024 (N=218.367)")
+        df_growth_plot = df_growth.copy()
+        df_growth_plot["Ingreso"] = df_growth_plot["Ingreso"] / 1000
+        fig_line = px.line(df_growth_plot, x="Edad", y="Ingreso", color="Región", markers=True,
                            color_discrete_map={'Metropolitana': GRAY_DARK, 'La Araucanía': COLOR_DARK, 'Chile': GRAY_LIGHT})
-        fig_line.update_traces(hovertemplate="Rango de edad: %{x}<br>Ingreso: $%{y:,.0f}")
+        fig_line.update_traces(hovertemplate="Rango de edad: %{x}<br>Ingreso: $%{y:,.0f} mil")
         fig_line.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
-                               yaxis_title="Ingreso per cápita ($)")
+                               yaxis_title="Ingreso per cápita (miles de $)")
         st.plotly_chart(fig_line, width='stretch')
         st.info("💡 **Interpretación:** A diferencia de la R. Metropolitana y el resto de Chile, los ingresos en La Araucanía se estancan rápidamente después de los 35 años.")
         st.caption("Nota: La curva 'Chile' excluye a La Araucanía y a la Región Metropolitana para permitir una comparación aislada frente a los extremos socioeconómicos del país.")
 
     with col2:
         st.subheader("Nivel Educacional (Población >25 años)")
-        st.caption("Fuente: Censo 2024")
+        st.caption("Fuente: Censo 2024 (N=18.480.432)")
         
         df_educ = df_educ.sort_values(by="Básica o menos", ascending=True)
         educ_order = ["Básica o menos", "Media", "Técnica", "Universitaria"]
