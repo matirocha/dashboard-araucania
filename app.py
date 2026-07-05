@@ -307,7 +307,7 @@ with tab_inicio:
     with c2:
         st.markdown('''<div class="story-card story-card-right">
             <h3>5. Crisis Multidimensional</h3>
-            <p>La pobreza monetaria es solo la punta del iceberg. Todo culmina en un grave estado de <b>carencias multidimensionales</b> (escolaridad, conectividad e informalidad laboral).</p>
+            <p>La pobreza monetaria es solo la punta del iceberg. Al analizar otras carencias, La Araucanía presenta una brecha alarmante frente al promedio nacional, viéndose sumamente afectada en años de <b>Escolaridad</b>, falta de <b>Conectividad</b> y un grave <b>Déficit cualitativo de la vivienda</b>. Factores que en conjunto perpetúan el ciclo de vulnerabilidad.</p>
         </div>''', unsafe_allow_html=True)
         
     st.divider()
