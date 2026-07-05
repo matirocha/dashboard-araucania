@@ -49,6 +49,10 @@ st.markdown(f"""
         transform: translateY(-5px);
         box-shadow: 0 8px 15px rgba(0,0,0,0.1);
     }}
+    [data-testid="stMetricValue"], [data-testid="stMetricLabel"] {{
+        color: black !important;
+        font-weight: 600 !important;
+    }}
     
     /* Tabs */
     .stTabs [data-baseweb="tab-list"] {{
@@ -131,7 +135,7 @@ with tab1:
             color_continuous_scale=[BACKGROUND_COLOR, COLOR_LIGHTEST, COLOR_DARK],
         )
         fig_map.update_geos(fitbounds="locations", visible=False)
-        fig_map.update_layout(margin={"r":0,"t":0,"l":0,"b":0}, paper_bgcolor='rgba(0,0,0,0)')
+        fig_map.update_layout(margin={"r":0,"t":0,"l":0,"b":0}, paper_bgcolor='rgba(0,0,0,0)', font_color='black', height=600)
         st.plotly_chart(fig_map, width='stretch')
         st.info("💡 **Interpretación:** La Araucanía destaca nítidamente con la mayor incidencia de pobreza a nivel nacional, superando ampliamente al resto de las regiones.")
 
@@ -145,8 +149,8 @@ with tab1:
             hover_name="Region",
             color_discrete_map={r: COLOR_DARK if r == 'La Araucanía' else GRAY_LIGHT for r in scatter_df['Region']}
         )
-        fig_scatter.update_traces(textposition='top center', marker=dict(size=12, line=dict(width=1, color='White')))
-        fig_scatter.update_layout(showlegend=False, paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
+        fig_scatter.update_traces(textposition='top center', textfont_color='black', marker=dict(size=12, line=dict(width=1, color='White')))
+        fig_scatter.update_layout(showlegend=False, paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', font_color='black',
                                   xaxis_title="Población Rural (%)", yaxis_title="Tasa de Pobreza (%)")
         st.plotly_chart(fig_scatter, width='stretch')
         st.info("💡 **Interpretación:** Existe una clara correlación positiva entre la ruralidad y la pobreza. La Araucanía se posiciona como un caso extremo en ambos factores.")
@@ -177,9 +181,9 @@ with tab2:
         fig_radar.update_layout(
             polar=dict(
                 radialaxis=dict(visible=True, gridcolor='#DDDDDD', linecolor='#CCCCCC'),
-                angularaxis=dict(gridcolor='#DDDDDD', linecolor='#CCCCCC', direction='clockwise', rotation=90)
+                angularaxis=dict(gridcolor='#DDDDDD', linecolor='#CCCCCC', direction='clockwise', rotation=90, tickfont=dict(color='black'))
             ),
-            paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', font_color=COLOR_DARK,
+            paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', font_color='black',
             legend=dict(orientation="h", yanchor="top", y=-0.1, xanchor="center", x=0.5)
         )
         st.plotly_chart(fig_radar, width='stretch')
@@ -190,8 +194,8 @@ with tab2:
         st.caption("Fuente: Encuesta CASEN 2024 (N=218.367)")
         fig_bar = px.bar(df_indig, x="Valor", y="Zona", color="Area", barmode="group", orientation='h',
                          color_discrete_map={'La Araucanía': COLOR_DARK, 'Chile': GRAY_LIGHT})
-        fig_bar.update_traces(texttemplate='%{x:.1f}%', textposition='outside', cliponaxis=False)
-        fig_bar.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', font_color=COLOR_DARK,
+        fig_bar.update_traces(texttemplate='%{x:.1f}%', textposition='outside', textfont_color='black', cliponaxis=False)
+        fig_bar.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', font_color='black',
                               xaxis_title="Porcentaje (%)", yaxis_title="")
         st.plotly_chart(fig_bar, width='stretch')
         st.info("💡 **Interpretación:** La Araucanía concentra una proporción significativamente mayor de población indígena que el resto de Chile, superando el 54% en zonas rurales.")
@@ -206,7 +210,7 @@ with tab3:
         fig_line = px.line(df_growth_plot, x="Edad", y="Ingreso", color="Región", markers=True,
                            color_discrete_map={'Metropolitana': GRAY_DARK, 'La Araucanía': COLOR_DARK, 'Chile': GRAY_LIGHT})
         fig_line.update_traces(hovertemplate="Rango de edad: %{x}<br>Ingreso: $%{y:,.0f} mil")
-        fig_line.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
+        fig_line.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', font_color='black',
                                yaxis_title="Ingreso per cápita (miles de $)")
         st.plotly_chart(fig_line, width='stretch')
         st.info("💡 **Interpretación:** A diferencia de la R. Metropolitana y el resto de Chile, los ingresos en La Araucanía se estancan rápidamente después de los 35 años.")
@@ -237,7 +241,7 @@ with tab3:
             ))
             
         fig_stack.update_layout(
-            barmode='stack', paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
+            barmode='stack', paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', font_color='black',
             xaxis_title="Porcentaje (%)", yaxis_title="", legend_title="Nivel"
         )
         st.plotly_chart(fig_stack, width='stretch')
